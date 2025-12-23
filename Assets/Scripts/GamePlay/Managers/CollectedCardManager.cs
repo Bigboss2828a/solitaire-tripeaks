@@ -1,9 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectedCardManager : MonoBehaviour
+public class CollectedCardManager : MonoBehaviour, ICustomStart
 {
     [SerializeField] List<CardItem> Collectedcards;
+
+    public void CustomStart()
+    {
+      
+    }
     public void AddCard(CardItem item)
     {
         Collectedcards.Add(item);

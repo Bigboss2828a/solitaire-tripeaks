@@ -9,7 +9,13 @@ public class TableCardManager : MonoBehaviour, ICustomStart
     public void CustomStart()
     {
         ActionManager.instance.OnAddStack += AddStackToList;
+        ActionManager.instance.OnAddSIngleCard += AddCard;
+        ActionManager.instance.callStacks.Invoke();
+        RandomizeCards();
 
+    }
+    void RandomizeCards()
+    {
         List<CardModel> cardModels = GameManager.instance.cardsHolder.GetRandomCardsFromPool(cards.Count);
         for (int i = 0; i < cards.Count; i++)
         {
@@ -24,6 +30,7 @@ public class TableCardManager : MonoBehaviour, ICustomStart
     }
     private void OnDisable()
     {
+        ActionManager.instance.OnAddSIngleCard -= AddCard;
         ActionManager.instance.OnAddStack-= AddStackToList;
 
     }

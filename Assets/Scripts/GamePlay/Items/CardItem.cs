@@ -31,22 +31,31 @@ public class CardItem : MonoBehaviour
         cardState = state;
         Init();
     }
-    private void Awake()
+    private void Start()
     {
+        StartCoroutine(Setup());
+    }
+    IEnumerator Setup()
+    {
+        yield return new WaitForEndOfFrame();
         if (defaultData)
         {
-        Init();
-            return;
+            Init();
+            if (cardState != CardState.OnBank)
+            {
+
+            ActionManager.instance.OnAddSIngleCard.Invoke(this);
+            }
+       
         }
-        if (CoveredByThem.Count ==0)
+
+    }
+    private void Init()
+    {
+        if (CoveredByThem.Count == 0 && !defaultData)
         {
             cardState = CardState.OnTableFaceUp;
         }
-    }
-    
-    private void Init()
-    {
-
         cardButton.onClick.RemoveAllListeners();
         cardButton.onClick.AddListener(OnCardClick);
         cardAnimation.Init(cardBack, cardModel.Sprite);

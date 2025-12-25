@@ -15,6 +15,7 @@ public class CardAnimation : MonoBehaviour
     {
         cardBack =  back;
         cardFront = front;
+        cardMovement.Init();
     }
     private IEnumerator _CardReveal()
     {

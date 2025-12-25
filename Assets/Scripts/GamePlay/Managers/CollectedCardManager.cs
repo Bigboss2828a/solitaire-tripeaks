@@ -25,4 +25,8 @@ public class CollectedCardManager : MonoBehaviour, ICustomStart, ICardList
     {
         return cards[cards.Count - 1];
     }
+    public int Count()
+    {
+        return cards.Count;
+    }
 }

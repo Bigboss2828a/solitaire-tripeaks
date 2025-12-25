@@ -7,10 +7,10 @@ public class MenuManager : MonoBehaviour
 {
     [Header("Refreces")]
     [SerializeField] MapManager mapManager;
-    [SerializeField] GameLoaderPanelManger gameLoader;
+    [SerializeField] GamePanelManger gameLoader;
     [Space(10)]
     [Header("UI")]
-    [SerializeField] Button btnCloseGameLoader;
+   
     [SerializeField] Button btnLoadLevel;
 
     private MapLevelModel currentMapLevelModel;
@@ -18,9 +18,10 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         gameLoader.Init();
-        btnCloseGameLoader.onClick.AddListener(CloseGameLoader);
+      
         ActionManagerMenu.Instance.OnLevelClicked += LevelClicked;
         btnLoadLevel.onClick.AddListener(LoadTheGameScene);
+        CloudManager.Instance.CloseClouds();
     }
     private void OnDisable()
     {
@@ -37,18 +38,15 @@ public class MenuManager : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         gameLoader.OpenPanel();
     }
-    void CloseGameLoader()
-    {
-        gameLoader.ClosePanel();
-    }
+
 
     public void LoadTheGameScene(/*MapLevelModel level*/)
     {
         PlayerPrefs.SetInt("Section", currentMapLevelModel.Section);
         PlayerPrefs.SetInt("Level", currentMapLevelModel.Level);
-        StartCoroutine(LoadingProccess());
+        StartCoroutine(LoadingProcess());
     }
-    IEnumerator LoadingProccess()
+   private IEnumerator LoadingProcess()
     {
         yield return new WaitForSeconds(0.3f);
         CloudManager.Instance.OpenClouds();

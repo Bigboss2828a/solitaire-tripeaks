@@ -6,4 +6,5 @@ public interface ICardList
     public void RemoveCard(CardItem item);
     public void RemoveLast();
     public CardItem ReturnLastCard();
+    public int Count();
 }

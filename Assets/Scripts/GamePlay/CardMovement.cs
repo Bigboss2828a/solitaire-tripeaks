@@ -8,12 +8,13 @@ public class CardMovement : MonoBehaviour
     Vector3 cachedStartPos;
     void Start()
     {
+        cachedStartPos = startPosition.position;
         Init();
     }
-    private void Init()
+    public void Init()
     {
         destinationPosition = GameManager.instance.collectPos();
-        cachedStartPos = startPosition.position;
+        
     }
     [ContextMenu("Move")]
     public void CardMove(float dur, Ease ease = Ease.Linear)

@@ -8,8 +8,12 @@ using System.Linq;
 )]
 public class CardsHolder : ScriptableObject
 {
+    public GameObject cardPrefab;
     public List<CardModel> spadeCards;
     public List<CardModel> heartCards;
+
+    public List<CardModel> clubCards;
+    public List<CardModel> diamondCards;
 
     public List<CardModel> allCards;
     public List<CardModel> poolCards;
@@ -22,9 +26,12 @@ public class CardsHolder : ScriptableObject
     private List<CardModel> MixCards()
     {
         allCards.Clear();
+        poolCards.Clear();
         List<CardModel> allCardsM = new List<CardModel>();
         allCardsM.AddRange(spadeCards);
         allCardsM.AddRange(heartCards);
+        allCardsM.AddRange(diamondCards);
+        allCardsM.AddRange(clubCards);
         for (int i = allCardsM.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -63,5 +70,9 @@ public class CardsHolder : ScriptableObject
         {
             poolCards.Add(allCards[i]);
         }
+    }
+    public List< CardModel> TakeRestCards()
+    {
+        return poolCards;
     }
 }

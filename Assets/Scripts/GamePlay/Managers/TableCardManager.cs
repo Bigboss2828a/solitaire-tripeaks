@@ -5,24 +5,28 @@ using UnityEngine;
 public class TableCardManager : MonoBehaviour, ICustomStart
 {
 
-    public List<CardItem> cards;
+    [SerializeField] List<CardItem> cards;
 
     public void CustomStart()
     {
         ActionManager.instance.OnAddStack += AddStackToList;
         ActionManager.instance.OnAddSIngleCard += AddCard;
         //ActionManager.instance.callStacks?.Invoke();
-        StartCoroutine(AfterGettingCards());
+       // StartCoroutine(AfterGettingCards());
 
+    }
+    public void TableSetup()
+    {
+        StartCoroutine(AfterGettingCards());
     }
     IEnumerator AfterGettingCards()
     {
-        yield return new WaitForSeconds(0.05f);
+       yield return new WaitForSeconds(0.05f);
         foreach (var item in cards)
         {
             item.Scatter();
         }
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
         RandomizeCards();
     }
     void RandomizeCards()

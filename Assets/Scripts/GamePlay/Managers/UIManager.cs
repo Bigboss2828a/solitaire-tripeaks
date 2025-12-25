@@ -18,4 +18,8 @@ public class UIManager : MonoBehaviour
     {
         backGround.sprite = Backgrounds[section];
     }
+    public void ActiveUndo(bool active)
+    {
+        btnUndo.gameObject.SetActive(active);
+    }
 }

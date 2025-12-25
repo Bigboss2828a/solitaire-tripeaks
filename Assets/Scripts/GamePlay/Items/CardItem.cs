@@ -23,7 +23,8 @@ public class CardItem : MonoBehaviour
     private CardState cardStatePrevious;
     private int originalSiblingIndex;
     private Transform originalParent;
-    [SerializeField] CardState cardState ; public CardState state() { return cardState; }
+    [SerializeField] CardState cardState;
+    public CardState state() { return cardState; }
     public void FeedData(CardModel card,CardState state)
     {
         cardModel = card;
@@ -52,7 +53,7 @@ public class CardItem : MonoBehaviour
     }
     private void Init()
     {
-        if (CoveredByThem.Count == 0 && !defaultData)
+        if (CoveredByThem.Count == 0 && !defaultData&& cardState !=CardState.OnBank)
         {
             cardState = CardState.OnTableFaceUp;
         }
@@ -84,17 +85,32 @@ public class CardItem : MonoBehaviour
     }
     void OnCardClick()
     {
-        if (cardState == CardState.OnTableFaceUp|| cardState == CardState.OnBank)
+        if (cardState == CardState.OnTableFaceUp)
         {
-        StartCoroutine(DoAction(CardState.Collected));
+            ActionManager.instance.OnCardCollected.Invoke(this);
+
+           // StartCoroutine(DoAction(CardState.Collected));
+
+        }
+        if (cardState == CardState.OnBank)
+        {
+            ActionManager.instance.OnCardCollected.Invoke(this);
+
+           // StartCoroutine(DoAction(CardState.Collected));
+
         }
     }
-  private IEnumerator DoAction(CardState newState)
+    public void ValidCard()
+    {
+       _DoAction(CardState.Collected);
+    }
+  private void _DoAction(CardState newState)
     {
         if (newState == CardState.Collected)
         {
             if (cardState == CardState.OnTableFaceUp)
             {
+
                 cardAnimation.CollectTable();
             }
             if (cardState == CardState.OnBank)
@@ -102,7 +118,6 @@ public class CardItem : MonoBehaviour
                 cardAnimation.CollectBank();
             }
                 SetParent();
-            ActionManager.instance.OnCardCollected.Invoke(this);
         }
         if (newState== CardState.OnTableFaceUp)
         {
@@ -118,15 +133,18 @@ public class CardItem : MonoBehaviour
         //
         cardStatePrevious = cardState;
         cardState = newState;
-        NotifyCardsBehind();
-        yield return new WaitForSeconds (0.5f);
+        Debug.Log("111");
+        //    yield return new WaitForSeconds (0.2f);
+        if (cardState == CardState.Collected)
+        {
+          NotifyCardsBehind();
+        }
+        
     }
+    
     public void UnDo()
     {
-        StartCoroutine(UnDoAction());
-    }
-    private IEnumerator UnDoAction()
-    {
+        //StartCoroutine(UnDoAction());
         if (cardStatePrevious == CardState.OnTableFaceUp)
         {
             cardAnimation.PutBackTable();
@@ -139,13 +157,20 @@ public class CardItem : MonoBehaviour
         //
         cardState = cardStatePrevious;
         NotifyCardsBehind();
-        yield return new WaitForSeconds (0.5f);
-
+      //  yield return new WaitForSeconds(0.5f);
     }
+/*    private IEnumerator UnDoAction()
+    {
+
+
+    }*/
+    private int tst;
     void NotifyCardsBehind()
     {
+      
         foreach (var item in CoverThem)
         {
+            tst++;
             item.FrontCardMoved();
         }
     }
@@ -159,11 +184,11 @@ public class CardItem : MonoBehaviour
         }
         if (!hasCover)
         {
-            StartCoroutine(DoAction(CardState.OnTableFaceUp));
+            _DoAction(CardState.OnTableFaceUp   );
         }
         else
         {
-            StartCoroutine(DoAction(CardState.OnTable));
+            _DoAction(CardState.OnTable);
         }
     }
     public void SetParent()

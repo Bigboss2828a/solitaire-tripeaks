@@ -186,4 +186,15 @@ public class CardItem : MonoBehaviour
     {
         return cardModel.Sprite;
     }
+    public IEnumerator _Scatter()
+    {
+        transform.position = new Vector3(transform.position.x+Random.Range(-2f,2f), transform.position.y+ Random.Range(-2f, 2f), 0);
+        yield return new WaitForSeconds(0.1f);
+        cardAnimation.PutBackTable();
+    }
+    public void Scatter()
+    {
+        StartCoroutine(_Scatter());
+    }
+
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class TableCardManager : MonoBehaviour, ICustomStart
@@ -10,9 +11,19 @@ public class TableCardManager : MonoBehaviour, ICustomStart
     {
         ActionManager.instance.OnAddStack += AddStackToList;
         ActionManager.instance.OnAddSIngleCard += AddCard;
-        ActionManager.instance.callStacks.Invoke();
-        RandomizeCards();
+        //ActionManager.instance.callStacks?.Invoke();
+        StartCoroutine(AfterGettingCards());
 
+    }
+    IEnumerator AfterGettingCards()
+    {
+        yield return new WaitForSeconds(0.05f);
+        foreach (var item in cards)
+        {
+            item.Scatter();
+        }
+        yield return new WaitForSeconds(1);
+        RandomizeCards();
     }
     void RandomizeCards()
     {
@@ -37,6 +48,7 @@ public class TableCardManager : MonoBehaviour, ICustomStart
   
     private void AddStackToList(List<CardItem> stack)
     {
+       
         cards.AddRange(stack);
     }
     public void AddCard(CardItem crd) {

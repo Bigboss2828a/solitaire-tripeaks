@@ -8,15 +8,16 @@ public class TableStack : MonoBehaviour
     public void Start()
     {
         
-        ActionManager.instance.callStacks += GiveCardsToTable;
+      
     }
     private void OnEnable()
     {
-        
+        //ActionManager.instance.callStacks += GiveCardsToTable;
+        GiveCardsToTable();
     }
     void OnDisable()
     {
-        ActionManager.instance.callStacks -= GiveCardsToTable;
+        //ActionManager.instance.callStacks -= GiveCardsToTable;
     }
     void GiveCardsToTable()
     {

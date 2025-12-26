@@ -22,7 +22,7 @@ public class TableStack : MonoBehaviour
     void GiveCardsToTable()
     {
         TakeCards();
-        ActionManager.instance.OnAddStack.Invoke(myCards);
+        ActionManager.OnAddStack.Invoke(myCards);
     }
     void TakeCards()
     {

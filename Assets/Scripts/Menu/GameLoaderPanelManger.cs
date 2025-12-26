@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class GamePanelManger : MonoBehaviour
     
     [SerializeField] Button btnAccept;
     [SerializeField] UnityEvent acceptEvent;
+    [SerializeField] TextMeshProUGUI txtExtra;
 
     public void Init()
     {
@@ -27,16 +29,24 @@ public class GamePanelManger : MonoBehaviour
     }
     void OnAcceptClicked()
     {
+        SoundManager.Instance.PlaySound("Button");
+
         acceptEvent.Invoke();
+    }
+    public void SetText(string s)
+    {
+        txtExtra.text = s;
     }
     public void OpenPanel()
     {
+        SoundManager.Instance.PlaySound("Button");
         gameLoaderPanel.SetActive(true);
         gameLoaderPanel.transform.DOScale(Vector3.one, 0.1f);
     }
     public void ClosePanel()
     {
-        gameLoaderPanel.SetActive(false);
+        SoundManager.Instance.PlaySound("Button");
         gameLoaderPanel.transform.DOScale(Vector3.zero, 0.1f);
+        gameLoaderPanel.SetActive(false);
     }
 }

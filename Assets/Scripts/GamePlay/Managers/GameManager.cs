@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour, ICustomStart
     [SerializeField] GamePanelManger winPanel;
     [SerializeField] GamePanelManger exitPanel;
     [SerializeField] Button btnGameExit;
+    private int UndoCost = 10;
     
 
 
@@ -73,11 +74,12 @@ public class GameManager : MonoBehaviour, ICustomStart
 
         btnGameExit.onClick.AddListener(OnExitButtonClicked);
         cardsHolder.Init();
-        ActionManager.instance.OnCardCollected += CollectCard;
+        ActionManager.OnCardCollected += CollectCard;
         StartCoroutine(RunGame());
     }
     IEnumerator RunGame()
     {
+        ActionManager.OnCoinChange.Invoke(PlayerDataManager.playerData.playerCoin);
         tableCardManager.TableSetup();
         int section = PlayerPrefs.GetInt("Section");
         int level = PlayerPrefs.GetInt("Level");
@@ -97,12 +99,9 @@ public class GameManager : MonoBehaviour, ICustomStart
     }
     private void OnDisable()
     {
-        ActionManager.instance.OnCardCollected -= CollectCard;
+        ActionManager.OnCardCollected -= CollectCard;
     }
-    public void UnDoAction()
-    {
-        UnCollectCard();
-    }
+
     public void CollectCard(CardItem cardItem)
     {
 
@@ -112,10 +111,18 @@ public class GameManager : MonoBehaviour, ICustomStart
             {
                 return;
             }
+            int cardValue = cardItem.UseCard();
+            if (cardValue>0)
+            {
+                PlayerDataManager.Increase(cardValue);
+                ActionManager.OnCoinChange.Invoke(PlayerDataManager.GetData().playerCoin);
+            }
             cardItem.ValidCard();
             tableCardManager.RemoveCard(cardItem);
             if (TableOut())
             {
+                SoundManager.Instance.PlaySound("Win");
+
                 winPanel.OpenPanel();
             }
         }
@@ -148,6 +155,12 @@ public class GameManager : MonoBehaviour, ICustomStart
     }
     public void UnCollectCard()
     {
+        if (!PlayerDataManager.DecreaseCoin(UndoCost))
+        {
+            return;
+        }
+            UndoCost = UndoCost * 2;
+            ActionManager.OnCoinChange.Invoke(PlayerDataManager.playerData.playerCoin);
 
         CardItem cardItem = collectedCardManager.ReturnLastCard();
         cardItem.UnDo();

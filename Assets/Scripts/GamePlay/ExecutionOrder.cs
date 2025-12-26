@@ -4,7 +4,7 @@ using UnityEngine;
 public class ExecutionOrder : MonoBehaviour
 {
     public MonoBehaviour gameManager;
-    public MonoBehaviour actionManager;
+   // public MonoBehaviour actionManager;
     public MonoBehaviour tableCardsManager;
     public MonoBehaviour collectedCardsManager;
     public MonoBehaviour bankCardManager;
@@ -16,7 +16,7 @@ public class ExecutionOrder : MonoBehaviour
     }
     private void Awake()
     {
-        CallCustomStart(actionManager);
+     //   CallCustomStart(actionManager);
     }
     IEnumerator RunScripts()
     {

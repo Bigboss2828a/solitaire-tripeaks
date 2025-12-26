@@ -25,6 +25,7 @@ public class CardItem : MonoBehaviour
     private Transform originalParent;
     [SerializeField] CardState cardState;
     public CardState state() { return cardState; }
+    private int cardValue = 30;
     public void FeedData(CardModel card,CardState state)
     {
         cardModel = card;
@@ -45,7 +46,7 @@ public class CardItem : MonoBehaviour
             if (cardState != CardState.OnBank)
             {
 
-            ActionManager.instance.OnAddSIngleCard.Invoke(this);
+            ActionManager.OnAddSIngleCard.Invoke(this);
             }
        
         }
@@ -87,14 +88,14 @@ public class CardItem : MonoBehaviour
     {
         if (cardState == CardState.OnTableFaceUp)
         {
-            ActionManager.instance.OnCardCollected.Invoke(this);
+            ActionManager.OnCardCollected.Invoke(this);
 
            // StartCoroutine(DoAction(CardState.Collected));
 
         }
         if (cardState == CardState.OnBank)
         {
-            ActionManager.instance.OnCardCollected.Invoke(this);
+            ActionManager.OnCardCollected.Invoke(this);
 
            // StartCoroutine(DoAction(CardState.Collected));
 
@@ -103,6 +104,12 @@ public class CardItem : MonoBehaviour
     public void ValidCard()
     {
        _DoAction(CardState.Collected);
+    }
+    public int UseCard()
+    {
+        int val = cardValue;
+        cardValue = 0;
+        return val;
     }
   private void _DoAction(CardState newState)
     {

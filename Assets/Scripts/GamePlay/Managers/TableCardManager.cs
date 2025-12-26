@@ -9,8 +9,8 @@ public class TableCardManager : MonoBehaviour, ICustomStart
 
     public void CustomStart()
     {
-        ActionManager.instance.OnAddStack += AddStackToList;
-        ActionManager.instance.OnAddSIngleCard += AddCard;
+        ActionManager.OnAddStack += AddStackToList;
+        ActionManager.OnAddSIngleCard += AddCard;
         //ActionManager.instance.callStacks?.Invoke();
        // StartCoroutine(AfterGettingCards());
 
@@ -45,8 +45,8 @@ public class TableCardManager : MonoBehaviour, ICustomStart
     }
     private void OnDisable()
     {
-        ActionManager.instance.OnAddSIngleCard -= AddCard;
-        ActionManager.instance.OnAddStack-= AddStackToList;
+        ActionManager.OnAddSIngleCard -= AddCard;
+        ActionManager.OnAddStack-= AddStackToList;
 
     }
   

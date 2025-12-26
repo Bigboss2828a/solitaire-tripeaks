@@ -19,6 +19,7 @@ public class CardAnimation : MonoBehaviour
     }
     private IEnumerator _CardReveal()
     {
+        SoundManager.Instance.PlaySound("Card3");
         cardMovement.CardRot90(rotateSpeed);
         yield return new WaitForSeconds(rotateSpeed);
         CardShowFace();
@@ -26,6 +27,7 @@ public class CardAnimation : MonoBehaviour
     }
     private IEnumerator _CardUnReveal()
     {
+        SoundManager.Instance.PlaySound("Card3");
         cardMovement.CardRot90(rotateSpeed);
         yield return new WaitForSeconds(rotateSpeed);
         CardShowBack();
@@ -61,11 +63,15 @@ public class CardAnimation : MonoBehaviour
         int rnd = Random.Range(0, 10);
         if (rnd > 4)
         {
+            SoundManager.Instance.PlaySound("Card");
+
             cardMovement.CardRot360Side(moveSpeed);
             cardMovement.CardMove(moveSpeed);
         }
         else
         {
+            SoundManager.Instance.PlaySound("Card2");
+
             cardMovement.CardMove(moveSpeed*1.4f,Ease.InOutBack);
         }
     }
@@ -74,11 +80,15 @@ public class CardAnimation : MonoBehaviour
         int rnd = Random.Range(0, 10);
         if (rnd > 4)
         {
+            SoundManager.Instance.PlaySound("Card");
+
             cardMovement.CardRot360Side(moveSpeed);
             cardMovement.CardUnMove(moveSpeed);
         }
         else
         {
+            SoundManager.Instance.PlaySound("Card2");
+
             cardMovement.CardUnMove(moveSpeed * 1.4f, Ease.InOutBack);
         }
     }

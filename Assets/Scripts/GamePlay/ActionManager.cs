@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionManager : MonoBehaviour,ICustomStart
+public static class ActionManager 
 {
-    public static ActionManager instance;
-    public Action<CardItem> OnCardCollected;
-    public Action callStacks;
-    public Action<List<CardItem>> OnAddStack;
-    public Action<CardItem> OnAddSIngleCard;
-    private void Awake()
-    {
-       
-    }
-    public void CustomStart()
-    {
-        instance = this;
-    }
+   // public static ActionManager instance;
+    public static Action<CardItem> OnCardCollected;
+    public static Action callStacks;
+    public static Action<List<CardItem>> OnAddStack;
+    public static Action<CardItem> OnAddSIngleCard;
+
+    public static Action<MapLevelItem> OnLevelClicked;
+    public static Action<int> OnCoinChange;
+    /*    public void CustomStart()
+        {
+            instance = this;
+        }*/
 }

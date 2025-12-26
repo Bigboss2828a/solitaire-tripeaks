@@ -16,6 +16,7 @@ public class MapLevelItem : MonoBehaviour
     }
     void OnJoinClicled()
     {
-        ActionManagerMenu.Instance.OnLevelClicked.Invoke(this);
+        ActionManager.OnLevelClicked.Invoke(this);
     }
+
 }

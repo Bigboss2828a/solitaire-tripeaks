@@ -26,6 +26,7 @@ public class CloudManager : MonoBehaviour
     [ContextMenu("Open")]
     public void OpenClouds()
     {
+        SoundManager.Instance.PlaySound("Cloud");
         rightSide.SetActive(true);
         leftSide.SetActive(true);
         rightSide.transform.DOLocalMove(Vector3.zero, .9f);
@@ -35,6 +36,8 @@ public class CloudManager : MonoBehaviour
     [ContextMenu("Close")]
     public void CloseClouds()
     {
+        SoundManager.Instance.PlaySound("Cloud");
+
         rightSide.transform.DOMove(rightHidePos.position, .9f).OnComplete(() => { rightSide.SetActive(false); });
         leftSide.transform.DOMove(leftHidePos.position, .9f).OnComplete(() => { leftSide.SetActive(false); });
     }

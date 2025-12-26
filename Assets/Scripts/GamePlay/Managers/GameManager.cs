@@ -195,6 +195,6 @@ public class GameManager : MonoBehaviour, ICustomStart
         yield return new WaitForSeconds(0.5f);
         CloudManager.Instance.OpenClouds();
         yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

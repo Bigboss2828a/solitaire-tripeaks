@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour
         CloudManager.Instance.OpenClouds();
 
         yield return new WaitForSeconds(3.3f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
 
     }
 }

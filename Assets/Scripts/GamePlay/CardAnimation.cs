@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,12 +50,41 @@ public class CardAnimation : MonoBehaviour
     {
         StartCoroutine (_CardUnReveal());
     }
-    public void Collect()
+    public void CollectBank()
     {
-        cardMovement.CardMove();
+        cardMovement.CardMove(moveSpeed);
+        Reveal();
     }
-    public void PutBack()
+    public void CollectTable()
     {
-        cardMovement.CardUnMove();
+        int rnd = Random.Range(0, 10);
+        if (rnd > 4)
+        {
+            cardMovement.CardRot360Side(moveSpeed);
+            cardMovement.CardMove(moveSpeed);
+        }
+        else
+        {
+            cardMovement.CardMove(moveSpeed*1.4f,Ease.InOutBack);
+        }
     }
+    public void PutBackTable()
+    {
+        int rnd = Random.Range(0, 10);
+        if (rnd > 4)
+        {
+            cardMovement.CardRot360Side(moveSpeed);
+            cardMovement.CardUnMove(moveSpeed);
+        }
+        else
+        {
+            cardMovement.CardUnMove(moveSpeed * 1.4f, Ease.InOutBack);
+        }
+    }
+    public void PutBackBank()
+    {
+        cardMovement.CardUnMove(moveSpeed);
+        UnReveal();
+    }
+
 }

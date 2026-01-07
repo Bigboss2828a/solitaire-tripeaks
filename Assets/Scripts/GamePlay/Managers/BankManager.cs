@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectedCardManager : MonoBehaviour, ICustomStart, ICardList
+public class BankManager : MonoBehaviour, ICustomStart, ICardList
 {
     [SerializeField] List<CardItem> cards;
 
     public void CustomStart()
     {
-      
+
     }
     public void AddCard(CardItem item)
     {
